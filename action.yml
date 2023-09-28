@@ -66,6 +66,10 @@ inputs:
     description: 'Whether to fail (exit code 1) on any issues while uploading the coverage'
     required: false
     default: true
+  reporter-version:
+    description: 'Choose custom version of coverage-reporter, example: `v2.2.3`'
+    required: false
+    default: 'latest'
 outputs:
   coveralls-api-result:
     description: 'Result status of Coveralls API post.'
@@ -88,7 +92,7 @@ runs:
       run: |
         mkdir -p ~/bin/
         cd ~/bin/
-        curl -sLO https://github.com/iurev/coveralls-github-action/releases/download/v2.2.1/coveralls-linux.tar.gz
+        curl -sLO https://github.com/iurev/coveralls-github-action/releases/download/${{inputs.reporter-version}}/coveralls-linux.tar.gz
         tar -xzf coveralls-linux.tar.gz
         echo ~/bin >> $GITHUB_PATH
 
@@ -98,8 +102,8 @@ runs:
       run: |
         mkdir -p ~/bin/
         cd ~/bin/
-        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/latest/download/coveralls-windows.zip
-        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/latest/download/coveralls-checksums.txt
+        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/${{inputs.reporter-version}}/download/coveralls-windows.zip
+        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/${{inputs.reporter-version}}/download/coveralls-checksums.txt
         cat coveralls-checksums.txt | grep coveralls-windows.zip | sha256sum --check
         zcat coveralls-windows.zip > coveralls.exe
         rm coveralls-checksums.txt
