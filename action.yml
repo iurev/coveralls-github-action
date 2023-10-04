@@ -102,11 +102,8 @@ runs:
       run: |
         mkdir -p ~/bin/
         cd ~/bin/
-        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/${{inputs.reporter-version}}/download/coveralls-windows.zip
-        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/${{inputs.reporter-version}}/download/coveralls-checksums.txt
-        cat coveralls-checksums.txt | grep coveralls-windows.zip | sha256sum --check
-        zcat coveralls-windows.zip > coveralls.exe
-        rm coveralls-checksums.txt
+        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/${{inputs.reporter-version}}/download/coveralls.exe
+        curl -sLO https://github.com/coverallsapp/coverage-reporter/releases/${{inputs.reporter-version}}/download/sqlite3.dll
         echo ~/bin >> $GITHUB_PATH
 
     - name: Done report
